@@ -5,27 +5,32 @@ import { useNavigate } from 'react-router-dom'
 import { BotaoSalvar, MainContainer, Titulo } from '../../styles'
 import { Campo } from '../../styles'
 import { Form, Opcao, Opcoes } from './styles'
-import * as enums from '../../utils/enums/Tarefa'
+import * as enums from '../../utils/enums/Contato'
 
-import { cadastrar } from '../../store/reducers/tarefas'
+import { cadastrar } from '../../store/reducers/contatos'
 
 const Formulario = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [titulo, setTitulo] = useState('')
+  const [nome, setNome] = useState('')
+  const [sobrenome, setSobrenome] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [email, setEmail] = useState('')
+  const [categoria, setCategoria] = useState(enums.Categoria.Amigos)
   const [descricao, setDescricao] = useState('')
-  const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
 
-  const cadastrarTarefa = (evento: FormEvent) => {
+  const cadastrarContato = (evento: FormEvent) => {
     evento.preventDefault()
 
     dispatch(
       cadastrar({
-        titulo,
-        prioridade,
-        descricao,
-        status: enums.Status.PENDENTE
+        nome,
+        sobrenome,
+        telefone,
+        email,
+        categoria,
+        descricao
       })
     )
     navigate('/')
@@ -33,35 +38,53 @@ const Formulario = () => {
 
   return (
     <MainContainer>
-      <Titulo>Nova tarefa</Titulo>
-      <Form onSubmit={cadastrarTarefa}>
+      <Titulo>Criar novo contato</Titulo>
+      <Form onSubmit={cadastrarContato}>
         <Campo
-          value={titulo}
-          onChange={(evento) => setTitulo(evento.target.value)}
+          value={nome}
+          onChange={(evento) => setNome(evento.target.value)}
           type="text"
-          placeholder="Titulo"
+          placeholder="Nome"
+        />
+        <Campo
+          value={sobrenome}
+          onChange={(evento) => setSobrenome(evento.target.value)}
+          type="text"
+          placeholder="Sobrenome"
+        />
+        <Campo
+          value={telefone}
+          onChange={(evento) => setTelefone(evento.target.value)}
+          type="text"
+          placeholder="Telefone"
+        />
+        <Campo
+          value={email}
+          onChange={(evento) => setEmail(evento.target.value)}
+          type="email"
+          placeholder="Email"
         />
         <Campo
           value={descricao}
           onChange={({ target }) => setDescricao(target.value)}
           as="textarea"
-          placeholder="Descrição da Tarefa"
+          placeholder="Descrição do Contato"
         />
         <Opcoes>
-          <p>Prioridade</p>
-          {Object.values(enums.Prioridade).map((prioridade) => (
-            <Opcao key={prioridade}>
+          <p>Categoria</p>
+          {Object.values(enums.Categoria).map((categoria) => (
+            <Opcao key={categoria}>
               <input
-                value={prioridade}
-                name="prioridade"
+                value={categoria}
+                name="categoria"
                 type="radio"
                 onChange={(evento) =>
-                  setPrioridade(evento.target.value as enums.Prioridade)
+                  setCategoria(evento.target.value as enums.Categoria)
                 }
-                id={prioridade}
-                defaultChecked={prioridade === enums.Prioridade.NORMAL}
+                id={categoria}
+                defaultChecked={categoria === enums.Categoria.Amigos}
               />{' '}
-              <label htmlFor={prioridade}>{prioridade}</label>
+              <label htmlFor={categoria}>{categoria}</label>
             </Opcao>
           ))}
         </Opcoes>

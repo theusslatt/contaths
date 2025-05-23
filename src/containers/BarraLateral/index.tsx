@@ -6,7 +6,7 @@ import { RootReducer } from '../../store'
 import { alterarTermo } from '../../store/reducers/filtro'
 
 import * as S from './styles'
-import * as enums from '../../utils/enums/Tarefa'
+import * as enums from '../../utils/enums/Contato'
 import { Botao, Campo } from '../../styles'
 
 type Props = {
@@ -31,35 +31,27 @@ const BarraLateral = ({ mostrarFiltros }: Props) => {
             />
             <S.Filtros>
               <FiltroCard
-                valor={enums.Status.PENDENTE}
-                criterio="status"
+                valor={enums.Categoria.Amigos}
+                criterio="categoria"
                 legenda="pendentes"
               />
               <FiltroCard
-                valor={enums.Status.CONCLUIDA}
-                criterio="status"
+                valor={enums.Categoria.Favorito}
+                criterio="categoria"
                 legenda="concluidas"
               />
               <FiltroCard
-                valor={enums.Prioridade.URGENTE}
-                criterio="prioridade"
+                valor={enums.Categoria.Trabalho}
+                criterio="categoria"
                 legenda="urgentes"
-              />
-              <FiltroCard
-                valor={enums.Prioridade.IMPORTANTE}
-                criterio="prioridade"
-                legenda="importantes"
-              />
-              <FiltroCard
-                valor={enums.Prioridade.NORMAL}
-                criterio="prioridade"
-                legenda="normal"
               />
               <FiltroCard criterio="todas" legenda="todas" />
             </S.Filtros>
           </>
         ) : (
-          <Botao onClick={() => Navigate('/')}>Voltar a lista de tarefas</Botao>
+          <Botao onClick={() => Navigate('/')}>
+            Voltar a lista de contatos
+          </Botao>
         )}
       </div>
     </S.Aside>
